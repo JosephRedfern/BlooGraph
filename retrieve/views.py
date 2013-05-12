@@ -3,7 +3,7 @@ from django.shortcuts import render
 from retrieve.models import DataPoint
 import time
 import math
-from datetime import date
+import datetime
 
 
 def graph(request):
@@ -62,7 +62,7 @@ def graph(request):
         #Logic for ETA goes here:
         seconds_until_increase = float(coins_until_next_increase)/values['mine_rate']['15m']
         increase_timestamp = math.ceil(seconds_until_increase/60)+time.time()
-        values['increase_date'] = date.fromtimestamp(increase_timestamp)
+        values['increase_date'] = datetime.fromtimestamp(increase_timestamp)
 
 
 
