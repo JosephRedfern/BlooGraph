@@ -61,7 +61,7 @@ def graph(request):
 
         #Logic for ETA goes here:
         seconds_until_increase = float(coins_until_next_increase)/values['mine_rate']['15m']
-        print "Seconds until increase:" str(seconds_until_increase)
+        print "Seconds until increase:" + str(seconds_until_increase)
         increase_timestamp = math.ceil(seconds_until_increase/60)+time.time()
         values['increase_date'] = datetime.datetime.fromtimestamp(increase_timestamp)
 
