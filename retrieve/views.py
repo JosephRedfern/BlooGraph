@@ -36,8 +36,12 @@ def graph(request):
 
     mostRecentFirst = data.order_by('-time')
 
-    values['coincount'] = mostRecentFirst[0].value
+    values['coin_count'] = mostRecentFirst[0].value
     values['difficulty'] = mostRecentFirst[0].difficulty
+
+    coins_until_next_increase = (values['difficulty']-7)*205000 - values['coin_count']
+
+    print coins_until_next_increase
 
     values['mine_rate'] = dict()
 
@@ -53,5 +57,10 @@ def graph(request):
     if(len(mostRecentFirst) > 90):
         values['mine_rate']['15m'] = float((mostRecentFirst[
                                            0].value - mostRecentFirst[90].value)) / 900
+
+        #Logic for ETA goes here:
+
+
+
 
     return render(request, "graph.html", values)
