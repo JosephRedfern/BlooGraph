@@ -14,8 +14,8 @@ def graph(request):
     max_points = 1000
     values['yoffset'] = data[0].value
 
-    if(len(dataset)>max_points):
-        spacing = int(math.floor(len(dataset)/max_points))
+    if(len(dataset) > max_points):
+        spacing = int(math.floor(len(dataset) / max_points))
     else:
         spacing = 1
 
@@ -23,22 +23,28 @@ def graph(request):
     for point in data:
         point_counter += 1
 
-        if(point_counter%spacing==0):
+        if(point_counter % spacing == 0):
             dataset.append({
-                # 'time':int(time.mktime(point.time.timetuple()))-int(time.mktime(data[0].time.timetuple())),
                 'time': time.mktime(point.time.timetuple()),
-                'value':point.value-values['yoffset'],
-                })
+                'value': point.value,
+            })
 
     values['data'] = dataset
-    values['coincount'] = data.order_by('-time')[0].value
-    values['difficulty'] = data.order_by('-time')[0].difficulty
 
+    mostRecentFirst = data.order_by('-time')
 
-    # values['mine_rate']['10s'] = (dataset[:-1]['value']-dataset[:-2]['value'])/10
-    # values['mine_rate']['1m'] = (dataset[:-1]['value']-dataset[:-7]['value'])/60
-    # values['mine_rate']['5m'] = (dataset[:-1]['value']-dataset[:-31]['value'])/300
-    # values['mine_rate']['15m'] = (dataset[:-1]['value']-dataset[:-91]['value'])/900
+    values['coincount'] = mostRecentFirst[0].value
+    values['difficulty'] = mostRecentFirst[0].difficulty
 
+    values['mine_rate'] = dict()
+
+    if(len(mostRecentFirst)>1):
+        values['mine_rate']['10s'] = float((mostRecentFirst[0].value-mostRecentFirst[1].value))/10
+    if(len(mostRecentFirst)>6): 
+        values['mine_rate']['1m'] = float((mostRecentFirst[0].value-mostRecentFirst[6].value))/60
+    if(len(mostRecentFirst)>30):
+        values['mine_rate']['5m'] = float((mostRecentFirst[0].value-mostRecentFirst[30].value))/300
+    if(len(mostRecentFirst)>90):
+        values['mine_rate']['15m'] = float((mostRecentFirst[0].value-mostRecentFirst[90].value))/900
 
     return render(request, "graph.html", values)

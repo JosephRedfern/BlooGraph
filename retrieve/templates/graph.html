@@ -24,6 +24,7 @@
             element: document.querySelector("#valueGraph"),
             width: 1000,
             height: 300,
+            min: {{data.0.value}},
             renderer: 'line',
             series: [ 
               {
@@ -38,12 +39,17 @@
                 name: "Total Coins",
               }]
           } );
-          
-          valueGraph.render();
+    
+    valueGraph.render();
+
+    var yAxis = new Rickshaw.Graph.Axis.Y({
+        graph: valueGraph,
+    });
+
+    yAxis.render();
 
     var hoverDetail = new Rickshaw.Graph.HoverDetail( {
         graph: valueGraph,
-        yFormatter: function(y) { return y + {{ yoffset }} }
     } );
 
     var valueGraphLegend = new Rickshaw.Graph.Legend( {
@@ -71,6 +77,11 @@
         <p>
             Current difficulty: <b>{{difficulty}}</b>
         </p>
+        <p>
+            Mine Averages: <b>{{mine_rate.1m|floatformat:"4"}}</b>, <b>{{mine_rate.5m|floatformat:"4"}}</b>, <b>{{mine_rate.15m|floatformat:"4"}}</b>
+        </p>
+        <p>
+             <i>Averages are in form: 1 minute blc/s, 5 minutes blc/s, 15 minute blc/s</i>
     </div>
     <!--Current Mine rate: {{mine_rate.10s}}-->
 </div>
