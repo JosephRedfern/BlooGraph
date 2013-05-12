@@ -27,13 +27,10 @@
             min: {{data.0.value}},
             renderer: 'line',
             series: [ 
-              {
-                data: [{% if data %}
-
+              {data: [{% if data %}
         {% for point in data %}
             { x: {{point.time}}, y: {{point.value}} },
         {% endfor %}
-
     {% endif %}],
                 color: '#BB3333',
                 name: "Total Coins",
