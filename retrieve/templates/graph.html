@@ -28,10 +28,8 @@
             renderer: 'line',
             series: [ 
               {data: [{% if data %}
-        {% for point in data %}
-            { x: {{point.time}}, y: {{point.value}} },
-        {% endfor %}
-    {% endif %}],
+                {% for point in data %}{ x: {{point.time}}, y: {{point.value}} },{% endfor %}
+                {% endif %}],
                 color: '#BB3333',
                 name: "Total Coins",
               }]
