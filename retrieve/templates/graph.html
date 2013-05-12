@@ -42,12 +42,13 @@
           valueGraph.render();
 
     var hoverDetail = new Rickshaw.Graph.HoverDetail( {
-        graph: valueGraph
+        graph: valueGraph,
+        yFormatter: function(y) { return y + {{ yoffset }} }
     } );
 
     var valueGraphLegend = new Rickshaw.Graph.Legend( {
         graph: valueGraph,
-        element: document.getElementById('valueGraphLegend')
+        element: document.getElementById('valueGraphLegend'),
 
     } );
 
@@ -57,8 +58,11 @@
     } );
 
     var axes = new Rickshaw.Graph.Axis.Time( {
-        graph: valueGraph
+        graph: valueGraph,
+    orientation: 'bottom',
     } );
+
+    axes.render();
     </script>
     <!--Current Mine rate: {{mine_rate.10s}}-->
 </div>

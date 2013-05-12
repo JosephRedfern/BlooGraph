@@ -12,6 +12,7 @@ def graph(request):
     dataset = []
 
     max_points = 1000
+    values['yoffset'] = data[0].value
 
     if(len(dataset)>max_points):
         spacing = int(math.floor(len(dataset)/max_points))
@@ -26,7 +27,7 @@ def graph(request):
             dataset.append({
                 # 'time':int(time.mktime(point.time.timetuple()))-int(time.mktime(data[0].time.timetuple())),
                 'time': time.mktime(point.time.timetuple()),
-                'value':point.value,
+                'value':point.value-values['yoffset'],
                 })
 
     values['data'] = dataset
