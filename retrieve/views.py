@@ -15,8 +15,7 @@ def graph(request):
     values['yoffset'] = data[0].value
 
     if(len(data) > max_points):
-        spacing = int(math.floor(len(dataset) / max_points))
-        print "Spacing:"+str(spacing)
+        spacing = int(math.floor(len(data) / max_points))
         if spacing<1:
             spacing = 1
     else:
