@@ -1,0 +1,31 @@
+{% load subtract %}
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/d3/3.0.8/d3.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/rickshaw/1.2.1/rickshaw.min.js"></script> 
+
+
+<body>
+<div id="markchart"></div>
+<script>
+      var markGraph = new Rickshaw.Graph( {
+        element: document.querySelector("#markchart"),
+        width: 1000,
+        height: 300,
+        renderer: 'line',
+        series: [ 
+          {
+            data: [{% if data %}
+
+    {% for point in data %}
+        { x: {{point.time}}, y: {{point.value}} },
+    {% endfor %}
+
+{% endif %}],
+            color: '#BB3333'
+          }]
+      } );
+      
+      markGraph.render();
+</script>
+</body>

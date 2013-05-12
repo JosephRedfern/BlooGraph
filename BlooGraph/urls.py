@@ -6,7 +6,7 @@ admin.autodiscover()
 
 urlpatterns = patterns('',
     # Examples:
-    # url(r'^$', 'BlooGraph.views.home', name='home'),
+    url(r'^$', 'retrieve.views.graph', name='graph'),
     # url(r'^BlooGraph/', include('BlooGraph.foo.urls')),
 
     # Uncomment the admin/doc line below to enable admin documentation:
