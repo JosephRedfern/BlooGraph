@@ -39,7 +39,7 @@ def graph(request):
     values['coin_count'] = mostRecentFirst[0].value
     values['difficulty'] = mostRecentFirst[0].difficulty
 
-    coins_until_next_increase = (values['difficulty']-7)*205000 - values['coin_count']
+    coins_until_next_increase = (values['difficulty']-6)*205000 - values['coin_count']
 
     print coins_until_next_increase
 
