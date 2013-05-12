@@ -26,7 +26,7 @@ def graph(request):
             dataset.append({
                 # 'time':int(time.mktime(point.time.timetuple()))-int(time.mktime(data[0].time.timetuple())),
                 'time': time.mktime(point.time.timetuple()),
-                'value':point.value-data[0].value,
+                'value':point.value,
                 })
 
     values['data'] = dataset
