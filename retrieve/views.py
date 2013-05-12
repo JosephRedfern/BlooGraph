@@ -16,6 +16,7 @@ def graph(request):
 
     if(DataPoint.objects.count() > max_points):
         spacing = int(math.floor(float(DataPoint.objects.count()) / max_points))
+        print "Spacing: "+spacing
         if spacing < 1:
             spacing = 1
     else:
