@@ -77,6 +77,12 @@
         </p>
         <p>
              <i>Averages are in form: 1 minute blc/s, 5 minutes blc/s, 15 minute blc/s</i>
+         </p>
+         {% if increase_date %}
+         <p>
+            ETA for Difficulty Increase: <b>{{increase_date}}</b>
+        </p>
+        {% endif %}
     </div>
     <!--Current Mine rate: {{mine_rate.10s}}-->
 </div>

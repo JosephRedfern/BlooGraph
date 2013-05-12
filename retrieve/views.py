@@ -59,6 +59,9 @@ def graph(request):
                                            0].value - mostRecentFirst[90].value)) / 900
 
         #Logic for ETA goes here:
+        seconds_until_increase = float(coins_until_next_increase)/values['mine_rate']['15m']
+        increase_timestamp = math.ceil(seconds_until_increase/60)+time.time()
+        values['increase_date'] = increase_date = date.fromtimestamp(increase_timestamp)
 
 
 
