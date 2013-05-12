@@ -16,6 +16,8 @@ def graph(request):
 
     if(len(data) > max_points):
         spacing = int(math.floor(len(dataset) / max_points))
+        if spacing<1:
+            spacing = 1
     else:
         spacing = 1
 
