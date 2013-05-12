@@ -32,6 +32,7 @@ def graph(request):
 
     values['data'] = dataset
     values['coincount'] = data.order_by('-time')[0].value
+    values['difficulty'] = data.order_by('-time')[0].difficulty
 
 
     # values['mine_rate']['10s'] = (dataset[:-1]['value']-dataset[:-2]['value'])/10
