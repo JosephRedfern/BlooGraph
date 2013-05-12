@@ -12,6 +12,7 @@ def graph(request):
     dataset = []
 
     max_points = 1000
+
     if(len(dataset)>max_points):
         spacing = int(math.floor(len(dataset)/max_points))
     else:
@@ -23,11 +24,18 @@ def graph(request):
 
         if(point_counter%spacing==0):
             dataset.append({
-                'time':int(time.mktime(point.time.timetuple()))-int(time.mktime(data[0].time.timetuple())),
+                # 'time':int(time.mktime(point.time.timetuple()))-int(time.mktime(data[0].time.timetuple())),
+                'time': time.mktime(point.time.timetuple()),
                 'value':point.value-data[0].value,
                 })
 
     values['data'] = dataset
+
+
+    # values['mine_rate']['10s'] = (dataset[:-1]['value']-dataset[:-2]['value'])/10
+    # values['mine_rate']['1m'] = (dataset[:-1]['value']-dataset[:-7]['value'])/60
+    # values['mine_rate']['5m'] = (dataset[:-1]['value']-dataset[:-31]['value'])/300
+    # values['mine_rate']['15m'] = (dataset[:-1]['value']-dataset[:-91]['value'])/900
 
 
     return render(request, "graph.html", values)
