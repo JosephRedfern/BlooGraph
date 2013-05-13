@@ -58,9 +58,13 @@ def graph(request):
     if(len(mostRecentFirst) > 90):
         values['mine_rate']['15m'] = float((mostRecentFirst[
                                            0].value - mostRecentFirst[90].value)) / 900
+    
+    if(len(mostRecentFirst) > 360):
+        values['mine_rate']['1hr'] = float((mostRecentFirst[
+                                           0].value - mostRecentFirst[360].value)) / 3600
 
         #Logic for ETA goes here:
-        seconds_until_increase = float(coins_until_next_increase)/values['mine_rate']['15m']
+        seconds_until_increase = float(coins_until_next_increase)/values['mine_rate']['1hr']
         values['increase_date'] = datetime.datetime.fromtimestamp(time.time()+seconds_until_increase)
 
 
