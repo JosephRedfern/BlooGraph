@@ -42,10 +42,10 @@ def graph(request):
 
     coins_until_next_increase = (values['difficulty']-6)*205000 - values['coin_count']
 
-    print coins_until_next_increase
-
     values['mine_rate'] = dict()
 
+
+    #TODO: Refactor this into a method for n second averages
     if(len(mostRecentFirst) > 1):
         values['mine_rate']['10s'] = float((mostRecentFirst[
                                            0].value - mostRecentFirst[1].value)) / 10
@@ -68,6 +68,32 @@ def graph(request):
         values['increase_date'] = datetime.datetime.fromtimestamp(time.time()+seconds_until_increase)
 
 
+
+    previous_difficulty_threshold = (values['difficulty']-7)*205000
+
+    current_difficulty_data = DataPoint.objects.filter(value__gt=previous_difficulty_threshold)
+
+
+    #Spacing for current graph
+    if(current_difficulty_data.count() > max_points):
+        spacing = int(math.ceil(float(current_difficulty_data.count()) / max_points))
+        if spacing < 1:
+            spacing = 1
+    else:
+        spacing = 1
+
+
+    #Space data evenly
+    values['difficulty_dataset'] = []
+    point_counter = 0
+    for point in current_difficulty_data:
+        point_counter += 1
+
+        if(point_counter % spacing == 0):
+            values['difficulty_dataset'].append({
+                'time': time.mktime(point.time.timetuple()),
+                'value': point.value,
+            })
 
 
     return render(request, "graph.html", values)

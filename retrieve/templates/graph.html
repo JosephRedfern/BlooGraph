@@ -19,6 +19,14 @@
             <div id="valueGraphLegend"></div>
     </div>
     <div id="slider"></div>
+
+    <h1>BlooCoin total coin count - current difficulty only</h1>
+    <div id="difficultyValueGraph"></div>
+    <div id="legend_container">
+            <div id="smoother" title="Smoothing"></div>
+            <div id="difficultyValueGraphLegend"></div>
+    </div>
+    <div id="difficultySlider"></div>
     <script>
           var valueGraph = new Rickshaw.Graph( {
             element: document.querySelector("#valueGraph"),
@@ -64,6 +72,52 @@
     } );
 
     axes.render();
+
+
+    var difficultyValueGraph = new Rickshaw.Graph( {
+        element: document.querySelector("#difficultyValueGraph"),
+        width: 1000,
+        height: 300,
+        min: {{difficulty_dataset.0.value}},
+        renderer: 'line',
+        series: [ 
+          {data: [{% if difficulty_dataset %}
+            {% for point in difficulty_dataset %}{ x: {{point.time}}, y: {{point.value}} },{% endfor %}
+            {% endif %}],
+            color: '#33BB33',
+            name: "Total Coins",
+          }]
+    } );
+    
+    difficultyValueGraph.render();
+
+    var difficultyYAxis = new Rickshaw.Graph.Axis.Y({
+        graph: difficultyValueGraph,
+    });
+
+    difficultyYAxis.render();
+
+    var difficultyHoverDetail = new Rickshaw.Graph.HoverDetail( {
+        graph: difficultyValueGraph,
+    } );
+
+    var valueGraphLegend = new Rickshaw.Graph.Legend( {
+        graph: difficultyValueGraph,
+        element: document.getElementById('difficultyValueGraphLegend'),
+
+    } );
+
+    var difficultyShelving = new Rickshaw.Graph.Behavior.Series.Toggle( {
+        graph: difficultyValueGraph,
+        legend: difficultyValueGraphLegend
+    } );
+
+    var difficultyAxes = new Rickshaw.Graph.Axis.Time( {
+        graph: difficultyValueGraph,
+        orientation: 'bottom',
+    } );
+
+    difficultyAxes.render();
     </script>
     <div  class="well" style='margin-top:10px'>
         <p>
